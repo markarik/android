@@ -5,4 +5,5 @@
     <string name="product_add">Add Product</string>
     <string name="add_product">add_product</string>
     <string name="product_description">Product Description</string>
+    <string name="title_activity_product_list">ProductListActivity</string>
 </resources>

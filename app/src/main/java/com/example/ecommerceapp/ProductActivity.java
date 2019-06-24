@@ -52,7 +52,27 @@ public class ProductActivity extends AppCompatActivity {
         String price = productPrice.getText().toString();
         String description = productDescription.getText().toString();
 
-        if(TextUtils.isEmpty(name)|| TextUtils.isEmpty(price)||TextUtils.isEmpty(description)){
+        /*if(TextUtils.isEmpty(name)|| TextUtils.isEmpty(price)||TextUtils.isEmpty(description)){
+            return  true;
+        }
+        else{
+            return  false;
+        }*/
+
+        if(TextUtils.isEmpty(name)){
+            productName.setError("Input Name");
+            return  true;
+        }
+
+
+        if(TextUtils.isEmpty(price)){
+            productPrice.setError("Input Price");
+            return  true;
+        }
+
+
+        if(description.length()<6){
+            productDescription.setError("Enter more than 6 characters");
             return  true;
         }
         else{
