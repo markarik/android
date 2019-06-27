@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="@dimen/activity_half_margin"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="@dimen/card_elevation"
+    android:layout_marginLeft="@dimen/activity_half_margin"
+    android:layout_marginStart="@dimen/activity_half_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/placeholder"
+            android:scaleType="center"
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/product_name_txt"
+                android:textStyle="bold"
+                android:layout_weight="6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Shoppy Nokia 310"/>
+            <LinearLayout
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/product_price_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textColor="@color/colorAccent"
+                    tools:text="Ksh 300"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_margin="8dp"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <RatingBar
+                android:id="@+id/rating"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:layout_gravity="center"
+                android:rating="3"
+
+                android:stepSize="1.0"
+                android:isIndicator="true"/>
+            <ImageView
+                android:id="@+id/add_to_cart_img"
+                android:layout_weight="3"
+                app:srcCompat="@drawable/ic_add_shopping_cart"
+                android:layout_width="0dp"
+                android:tint="@color/colorAccent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

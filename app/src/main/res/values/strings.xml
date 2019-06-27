@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">ECommerceApp</string>
+    <string name="app_name">EcommerceApp</string>
     <string name="product_name">name</string>
-    <string name="ProductPrice">Ksh</string>
-    <string name="product_add">Add Product</string>
-    <string name="add_product">add_product</string>
-    <string name="product_description">Product Description</string>
+    <string name="product_jina">Jina</string>
+    <string name="product_description">Description</string>
+    <string name="product_price">Price</string>
+    <string name="add_product">Add</string>
+    <string name="product_Activity_title">New Product</string>
+    <string name="kitu_fulani">Kitu Fulani</string>
     <string name="title_activity_product_list">ProductListActivity</string>
+
 </resources>

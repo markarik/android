@@ -29,7 +29,7 @@
    <EditText
        android:id="@+id/product_price_edit"
        android:layout_width="match_parent"
-       android:hint="@string/ProductPrice"
+       android:hint="@string/product_price"
        android:inputType="number"
        android:paddingTop="50dp"
        android:layout_height="wrap_content" />
