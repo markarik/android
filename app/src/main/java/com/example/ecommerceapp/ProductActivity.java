@@ -50,10 +50,12 @@ public class ProductActivity extends AppCompatActivity {
         populateSpinner();
         Intent i = getIntent();
         int position = i.getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,-2);
-        Product product = ProductListActivity.mProductArrayList.get(position);
-        productImage.setImageResource(product.getImage());
-        productName.setText(product.getName());
-        productPrice.setText(product.getPrice());
+        if(position!=-2) {
+            Product product = ProductListActivity.mProductArrayList.get(position);
+            productImage.setImageResource(product.getImage());
+            productName.setText(product.getName());
+            productPrice.setText(product.getPrice());
+        }
 
     }
 
