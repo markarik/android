@@ -41,6 +41,15 @@
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/product_striked_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:text="ksh 300"/>
+
+                <TextView
                     android:id="@+id/product_price_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -30,9 +30,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @NonNull
     @Override
-    public ProductViewHolders onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ProductViewHolders onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
-        View view=mLayoutInflater.inflate(R.layout.item_product,viewGroup,false);
+        View view=mLayoutInflater.inflate(R.layout.item_product,parent,false);
         return new ProductViewHolders(view);
     }
 
@@ -42,33 +42,45 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         productViewHolders.productName.setText(product.getName());
         productViewHolders.productPrice.setText("Ksh "+product.getPrice());
         productViewHolders.productImage.setImageResource(product.getImage());
+        productViewHolders.strikedProductPrice.setText(product.getStrikedPrice() );
         productViewHolders.mcurrentPosition =position;
-
-
     }
 
     @Override
     public int getItemCount() {
+
         return mProductArrayList.size();
     }
 
     public class ProductViewHolders extends RecyclerView.ViewHolder{
+
         private final ImageView productImage,addToCart;
-        private final TextView productName,productPrice;
+
+        private final TextView productName,productPrice,strikedProductPrice;
+
         public  int mcurrentPosition;//could be used to track perivous position
+
         public ProductViewHolders(@NonNull View itemView) {
+
             super(itemView);
-            productImage=(ImageView) itemView.findViewById(R.id.product_image);
-            addToCart=(ImageView) itemView.findViewById(R.id.add_to_cart_img);
-            productName=(TextView) itemView.findViewById(R.id.product_name_txt);
-            productPrice=(TextView) itemView.findViewById(R.id.product_price_txt);
 
-            addToCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        productImage=(ImageView) itemView.findViewById(R.id.product_image);
 
-                }
-            });
+        addToCart=(ImageView) itemView.findViewById(R.id.add_to_cart_img);
+
+        productName=(TextView) itemView.findViewById(R.id.product_name_txt);
+
+        productPrice=(TextView) itemView.findViewById(R.id.product_price_txt);
+
+        strikedProductPrice = (TextView)itemView.findViewById(R.id.product_striked_txt);
+
+        addToCart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
 
         }

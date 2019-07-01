@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,13 +14,49 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class ProductListActivity extends AppCompatActivity {
+
     public static ArrayList<Product> mProductArrayList = new ArrayList<>();
+
     RecyclerView mRecyclerView;
-    private String[] productNames = {"Hoverboard v-4 s","Natural light googles","Black Lether Wallet","Nike supra 3","Beat wireless earphones","Khaki handbags","Brown Rubber"};
-    private String[] productPrices={"17000","800","1500","3500","1500","1200","2200"};
-    private int[] productImages = {R.drawable.hover_board,R.drawable.googles,R.drawable.wallet,R.drawable.nike,R.drawable.beat_headphones,R.drawable.h_bag,R.drawable.rubber_shoe};
+
+    private String[] productNames = {
+            "Hover board v-4 s",
+            "Natural light googles",
+            "Black Leather Wallet",
+            "Nike supra 3",
+            "Beat wireless earphones",
+            "Khaki handbags",
+            "Brown Rubber"
+    };
+    private String[] productPrices={
+            "17000",
+            "800",
+            "1500",
+            "3500",
+            "1500",
+            "1200",
+            "2200"
+    };
+    private String[] productStrikedPrice={
+      "20000",
+      "1000",
+      "2000",
+      "4000",
+      "2000",
+      "1500",
+      "2500"
+    };
+    private int[] productImages = {
+            R.drawable.hover_board,
+            R.drawable.googles,
+            R.drawable.wallet,
+            R.drawable.nike,
+            R.drawable.beat_headphones,
+            R.drawable.h_bag,
+            R.drawable.rubber_shoe};
 
     ProductListAdapter mProductListAdapter ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +81,12 @@ public class ProductListActivity extends AppCompatActivity {
     }
     public  void populateRecyclerView(){
         mProductArrayList.clear();
-        for(int index =0;index<productNames.length;index++){
+        for(int index =0;index<productImages.length;index++){
             Product product=new Product();
             product.setName(productNames[index]);
             product.setPrice(productPrices[index]);
             product.setImage(productImages[index]);
+            product.setStrikedPrice(productStrikedPrice[index]);
             mProductArrayList.add(product);
         }
         mProductListAdapter.notifyDataSetChanged();

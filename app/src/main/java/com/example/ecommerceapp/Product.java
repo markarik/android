@@ -2,7 +2,7 @@ package com.example.ecommerceapp;
 
 public class Product {
 
-    String category,name,price;
+    String category,name,price,strikedPrice;
     int image;
 
 
@@ -26,6 +26,7 @@ public class Product {
         return price;
     }
 
+
     public void setPrice(String price) {
         this.price = price;
     }
@@ -36,5 +37,13 @@ public class Product {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getStrikedPrice() {
+        return strikedPrice;
+    }
+
+    public void setStrikedPrice(String strikedPrice) {
+        this.strikedPrice = strikedPrice;
     }
 }
