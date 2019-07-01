@@ -2,8 +2,8 @@ package com.example.ecommerceapp;
 
 public class Product {
 
-    String category,name,price,strikedPrice;
-    int image;
+    private String category,name,price,strikedPrice;
+    private int image;
 
 
     public String getCategory() {

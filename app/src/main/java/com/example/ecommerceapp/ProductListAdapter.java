@@ -2,6 +2,7 @@ package com.example.ecommerceapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolders> {
+    public static final String CURRENT_POSITION_VALUE = "com.example.ecommerceapp";
     private final Context mContext;
 
     private final   LayoutInflater mLayoutInflater;
@@ -81,7 +83,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
             }
         });
-
+itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(mContext,ProductActivity.class);
+        intent.putExtra(CURRENT_POSITION_VALUE,mcurrentPosition);
+        mContext.startActivity(intent);
+    }
+});
 
         }
     }

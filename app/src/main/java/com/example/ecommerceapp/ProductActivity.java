@@ -1,5 +1,6 @@
 package com.example.ecommerceapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,13 +19,14 @@ public class ProductActivity extends AppCompatActivity {
     EditText productName,productDescription,productPrice;
     Button addProduct;
     Spinner categorySpinner;
+    ImageView productImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-
+        productImage = (ImageView) findViewById(R.id.product_image);
         productName = (EditText) findViewById(R.id.product_name_edit);
         productDescription = (EditText) findViewById(R.id.product_description_edit);
         productPrice = (EditText)  findViewById(R.id.product_price_edit);
@@ -45,6 +48,13 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
         populateSpinner();
+        Intent i = getIntent();
+        int position = i.getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,-2);
+        Product product = ProductListActivity.mProductArrayList.get(position);
+        productImage.setImageResource(product.getImage());
+        productName.setText(product.getName());
+        productPrice.setText(product.getPrice());
+
     }
 
     public boolean isErrors(){
