@@ -8,6 +8,15 @@
     android:layout_height="match_parent"
     android:background="@color/colorBody"
     tools:context=".ProductActivity">
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:layout_height="match_parent">
+
+
 
    <Spinner
        android:id="@+id/category_spinner"
@@ -52,6 +61,17 @@
         android:background="@color/colorPrimaryDark"
         android:text="ADD"
         android:textColor="@color/colorWhite" />
+   <Button
+        android:id="@+id/btn_email"
+       android:layout_marginTop="50dp"
 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:text="Email"
+        android:textColor="@color/colorWhite" />
+      </LinearLayout>
+   </ScrollView>
 
 </LinearLayout>

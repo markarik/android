@@ -1,6 +1,10 @@
 package com.example.ecommerceapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,10 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
-    EditText productName,productDescription,productPrice;
-    Button addProduct;
-    Spinner categorySpinner;
-    ImageView productImage;
+    private static final int REQUEST_CODE = 400;
+    private EditText productName,productDescription,productPrice;
+    private Button addProduct,emailbtn;
+    private Spinner categorySpinner;
+    private ImageView productImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +33,32 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
 
         productImage = (ImageView) findViewById(R.id.product_image);
+        productImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+//startActivity(i);
+                startActivityForResult(i,REQUEST_CODE);
+            }
+        });
         productName = (EditText) findViewById(R.id.product_name_edit);
         productDescription = (EditText) findViewById(R.id.product_description_edit);
         productPrice = (EditText)  findViewById(R.id.product_price_edit);
         categorySpinner = (Spinner) findViewById(R.id.category_spinner);
         addProduct = (Button) findViewById(R.id.add_product);
+
+        emailbtn = (Button)findViewById(R.id.btn_email);
+
+        emailbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                sendEmail();
+            }
+        });
+
 
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +85,16 @@ public class ProductActivity extends AppCompatActivity {
             productDescription.setText(product.getDescription());
         }
 
+    }
+
+    private void sendEmail() {
+        String subject = "My subject";
+        String text = "I noticed something";
+        Intent i =new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc2822");
+        i.putExtra(Intent.EXTRA_SUBJECT,subject);
+        i.putExtra(Intent.EXTRA_TEXT,text);
+        startActivity(i);
     }
 
     public boolean isErrors(){
@@ -93,6 +130,10 @@ public class ProductActivity extends AppCompatActivity {
         }
     }
 
+
+
+
+
     public void  populateSpinner(){
 //
         List<String> spinnerArray = new ArrayList<String>();
@@ -111,4 +152,14 @@ public class ProductActivity extends AppCompatActivity {
         categorySpinner.setAdapter(adapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null){
+
+            Bitmap b =(Bitmap)data.getExtras().get("data");
+
+            productImage.setImageBitmap(b);
+        }
+    }
 }
