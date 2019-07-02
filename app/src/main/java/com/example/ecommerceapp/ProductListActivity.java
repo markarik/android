@@ -53,7 +53,20 @@ public class ProductListActivity extends AppCompatActivity {
             R.drawable.nike,
             R.drawable.beat_headphones,
             R.drawable.h_bag,
-            R.drawable.rubber_shoe};
+            R.drawable.rubber_shoe
+    };
+
+    private String[] productDescription = {
+            "Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            " containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            " Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            " Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            " passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            " and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+
+
+    };
 
     ProductListAdapter mProductListAdapter ;
 
@@ -87,6 +100,7 @@ public class ProductListActivity extends AppCompatActivity {
             product.setPrice(productPrices[index]);
             product.setImage(productImages[index]);
             product.setStrikedPrice(productStrikedPrice[index]);
+            product.setDescription(productDescription[index]);
             mProductArrayList.add(product);
         }
         mProductListAdapter.notifyDataSetChanged();

@@ -55,6 +55,7 @@ public class ProductActivity extends AppCompatActivity {
             productImage.setImageResource(product.getImage());
             productName.setText(product.getName());
             productPrice.setText(product.getPrice());
+            productDescription.setText(product.getDescription());
         }
 
     }
