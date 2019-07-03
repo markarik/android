@@ -58,7 +58,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         private final ImageView productImage,addToCart;
 
-        private final TextView productName,productPrice,strikedProductPrice;
+        private final TextView productName,productPrice,strikedProductPrice
+                ;
 
         public  int mcurrentPosition;//could be used to track perivous position
 

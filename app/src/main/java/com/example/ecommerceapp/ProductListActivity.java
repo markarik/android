@@ -2,6 +2,7 @@ package com.example.ecommerceapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -91,6 +94,7 @@ public class ProductListActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Log.d("start","Acticity onCreate");
     }
     public  void populateRecyclerView(){
         mProductArrayList.clear();
@@ -106,5 +110,44 @@ public class ProductListActivity extends AppCompatActivity {
         mProductListAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Do you want to exit", Toast.LENGTH_SHORT).show();
+    }
 
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("Start","Activity onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("start","Activity onResume");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d("Start","Activity onStop");
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Start","Activity onPause");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Start","Activity onDestroy");
+
+    }
 }
