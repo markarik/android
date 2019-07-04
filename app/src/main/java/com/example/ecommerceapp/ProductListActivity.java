@@ -3,6 +3,7 @@ package com.example.ecommerceapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,9 @@ public class ProductListActivity extends AppCompatActivity {
     public static ArrayList<Product> mProductArrayList = new ArrayList<>();
 
     RecyclerView mRecyclerView;
+
+
+    static int position =78;
 
     private String[] productNames = {
             "Hover board v-4 s",
@@ -77,6 +81,12 @@ public class ProductListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+
+        if(savedInstanceState!=null){
+            position = savedInstanceState.getInt("Position");
+        }
+
+
         mRecyclerView=(RecyclerView) findViewById(R.id.product_list_recyclerView);
         mProductListAdapter=new ProductListAdapter(ProductListActivity.this,mProductArrayList);
 
@@ -94,7 +104,7 @@ public class ProductListActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        Log.d("start","Acticity onCreate");
+        Log.d("start","Acticity onCreate and position variable="+position);
     }
     public  void populateRecyclerView(){
         mProductArrayList.clear();
@@ -140,7 +150,8 @@ public class ProductListActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("Start","Activity onPause");
+        position = 80;
+        Log.d("Start","Activity onPause and position ="+position);
 
     }
 
@@ -149,5 +160,11 @@ public class ProductListActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d("Start","Activity onDestroy");
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Position",position);
     }
 }
