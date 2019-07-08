@@ -1,5 +1,6 @@
 package com.example.ecommerceapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,7 +58,7 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                sendEmail();
+                sendEmail(ProductActivity.this);
             }
         });
 
@@ -87,14 +90,14 @@ public class ProductActivity extends AppCompatActivity {
 
     }
 
-    private void sendEmail() {
+    public void sendEmail(Context context) {
         String subject = "My subject";
         String text = "I noticed something";
         Intent i =new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc2822");
         i.putExtra(Intent.EXTRA_SUBJECT,subject);
         i.putExtra(Intent.EXTRA_TEXT,text);
-        startActivity(i);
+        context.startActivity(i);
     }
 
     public boolean isErrors(){
@@ -161,5 +164,23 @@ public class ProductActivity extends AppCompatActivity {
 
             productImage.setImageBitmap(b);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch(itemId){
+            case R.id.admin_email:{
+                sendEmail(ProductActivity.this);
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
