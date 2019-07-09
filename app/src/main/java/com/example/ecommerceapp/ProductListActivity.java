@@ -170,7 +170,7 @@ public class ProductListActivity extends AppCompatActivity {
         outState.putInt("Position",position);
     }
 
-    @Override
+  /*  @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemID = item.getItemId();
         switch (itemID){
@@ -190,5 +190,5 @@ public class ProductListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 }

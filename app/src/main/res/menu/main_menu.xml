@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:title="Email Admin"
         android:id="@+id/admin_email"/>
     <item
         android:title="Logout"
-        android:id="@+id/options_logout"
-        />
+        android:id="@+id/options_logout"/>
+
+    <item
+        android:title="Next"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_skip_next_black"
+        android:id="@+id/action_next"/>
+    <item
+        android:title="Previous"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_skip_previous_black"
+        android:id="@+id/action_previous"/>
 
 </menu>

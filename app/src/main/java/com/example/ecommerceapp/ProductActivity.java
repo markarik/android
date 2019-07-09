@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +25,19 @@ import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 400;
+    private static final int DEFAULT_POSITION =-2;
     private EditText productName,productDescription,productPrice;
     private Button addProduct,emailbtn;
     private Spinner categorySpinner;
     private ImageView productImage;
+    private int mposition;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent i = getIntent();
+        mposition = i.getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,DEFAULT_POSITION);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +87,21 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
         populateSpinner();
-        Intent i = getIntent();
-        int position = i.getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,-2);
-        if(position!=-2) {
-            Product product = ProductListActivity.mProductArrayList.get(position);
+
+        fillData();
+
+    }
+
+    private void fillData() {
+
+        if(mposition !=DEFAULT_POSITION)
+        {
+            Product product = ProductListActivity.mProductArrayList.get(mposition);
             productImage.setImageResource(product.getImage());
             productName.setText(product.getName());
             productPrice.setText(product.getPrice());
             productDescription.setText(product.getDescription());
         }
-
     }
 
     public void sendEmail(Context context) {
@@ -180,7 +194,56 @@ public class ProductActivity extends AppCompatActivity {
                 sendEmail(ProductActivity.this);
                 break;
             }
+
+            case R.id.action_next:{
+         //next
+                moveNext();
+
+                break;
+            }
+            case R.id.action_previous:{
+         //previous
+                movePrevious();
+
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void movePrevious() {
+
+        mposition--;
+        fillData();
+        invalidateOptionsMenu();
+    }
+
+    private void moveNext() {
+        mposition++;
+        fillData();
+        invalidateOptionsMenu();
+    }
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem item = menu.findItem(R.id.action_next);
+        MenuItem previtem = menu.findItem(R.id.action_previous);
+            int productPosition = ProductListActivity.mProductArrayList.size()-1;
+           /* if(mposition< productPosition){
+                item.setEnabled(true);
+            }*/
+            //item.setEnabled(mposition < productPosition);
+            item.setVisible(mposition<productPosition);
+
+            previtem.setVisible(mposition !=0);
+          /* if(mposition != 0*//*&&mposition<productPosition*//*){
+               previtem.setVisible(true);
+           }else {
+               previtem.setVisible(false);
+           }*/
+            //Log.d("position",productPosition+"");
+        return super.onPrepareOptionsMenu(menu);
     }
 }
