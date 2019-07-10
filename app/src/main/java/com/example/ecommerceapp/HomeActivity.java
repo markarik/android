@@ -1,5 +1,6 @@
 package com.example.ecommerceapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -79,11 +80,14 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_products) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(HomeActivity.this,ProductListActivity.class);
+            startActivity(intent);
+            // Handle the camera action
+        } else if (id == R.id.nav_sales) {
+
+        } else if (id == R.id.nav_inventory) {
 
         }  else if (id == R.id.nav_share) {
 
