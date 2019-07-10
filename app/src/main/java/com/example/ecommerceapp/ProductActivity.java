@@ -32,11 +32,9 @@ public class ProductActivity extends AppCompatActivity {
     private ImageView productImage;
     private int mposition;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent i = getIntent();
-        mposition = i.getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,DEFAULT_POSITION);
+
+    private void getIntentPosition(){
+        mposition = getIntent().getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,DEFAULT_POSITION);
     }
 
     @Override
@@ -87,6 +85,8 @@ public class ProductActivity extends AppCompatActivity {
             }
         });
         populateSpinner();
+
+        getIntentPosition();
 
         fillData();
 
