@@ -34,7 +34,8 @@
                 android:layout_weight="6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="Shoppy Nokia 310"/>
+                tools:text="Shoppy Nokia 310"
+                />
             <LinearLayout
                 android:layout_weight="4"
                 android:layout_width="0dp"

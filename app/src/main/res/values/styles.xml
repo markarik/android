@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -16,5 +16,22 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--<style name="my_text_style" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorGreen</item>
+    </style>
+
+    <style name="my_text_style.branded">
+
+        <item name="android:textColor">@color/colorGreen</item>
+
+    </style>-->
+    <style name="add_fab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:src">@drawable/ic_add</item>
+        <item name="android:tint">@color/colorBody</item>
+    </style>
+
+
 
 </resources>

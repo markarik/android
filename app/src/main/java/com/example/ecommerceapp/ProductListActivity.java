@@ -122,11 +122,11 @@ public class ProductListActivity extends AppCompatActivity {
         mProductListAdapter.notifyDataSetChanged();
     }
 
-    @Override
+   /* @Override
     public void onBackPressed() {
         Toast.makeText(this, "Do you want to exit", Toast.LENGTH_SHORT).show();
     }
-
+*/
 
 
     @Override
