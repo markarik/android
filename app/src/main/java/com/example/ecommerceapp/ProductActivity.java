@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.ecommerceapp.object_box.ObjectBox;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import io.objectbox.Box;
 
 public class ProductActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 400;
@@ -30,6 +35,7 @@ public class ProductActivity extends AppCompatActivity {
     private Button addProduct,emailbtn;
     private Spinner categorySpinner;
     private ImageView productImage;
+    private Box<Product>mProductBox;
     private int mposition;
 
 
@@ -42,6 +48,7 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
+        mProductBox = ObjectBox.get().boxFor(Product.class);
         productImage = (ImageView) findViewById(R.id.product_image);
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +85,16 @@ public class ProductActivity extends AppCompatActivity {
 
 
                     Toast.makeText(ProductActivity.this, "Please ensure you fill all the fields before proceeding",Toast.LENGTH_SHORT).show();
-               return;
+                    return;
                 }else{
-                    Toast.makeText(ProductActivity.this,"item will be added",Toast.LENGTH_SHORT).show();
+
+
+                 Toast toast = Toast.makeText(ProductActivity.this,"item Has been  added",Toast.LENGTH_SHORT);
+
+                   toast.setGravity(Gravity.TOP,0,100);
+                 toast.show();
+
+                    addProduct();
                 }
             }
         });
@@ -245,5 +259,22 @@ public class ProductActivity extends AppCompatActivity {
            }*/
             //Log.d("position",productPosition+"");
         return super.onPrepareOptionsMenu(menu);
+    }
+
+
+    private void addProduct(){
+        String name = productName.getText().toString();
+        String price = productPrice.getText().toString();
+        String description = productDescription.getText().toString();
+        String category = categorySpinner.getSelectedItem().toString();
+
+
+        ////insert into products model
+        Product product = new Product(category,name,price,description,R.drawable.beat_headphones);
+
+        //add product to objectbox
+        mProductBox.put(product);
+
+        finish();
     }
 }

@@ -17,7 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ecommerceapp.object_box.ObjectBox;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import io.objectbox.Box;
+import io.objectbox.query.Query;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -25,10 +31,15 @@ public class ProductListActivity extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
 
+    //variables
+
+    private Box<Product>mProductBox;
+    private Query<Product>mProductQuery;
+
 
     static int position =78;
 
-    private String[] productNames = {
+   /* private String[] productNames = {
             "Hover board v-4 s",
             "Natural light googles",
             "Black Leather Wallet",
@@ -75,7 +86,7 @@ public class ProductListActivity extends AppCompatActivity {
             " and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
 
 
-    };
+    };*/
 
     ProductListAdapter mProductListAdapter ;
 
@@ -92,7 +103,7 @@ public class ProductListActivity extends AppCompatActivity {
         mRecyclerView=(RecyclerView) findViewById(R.id.product_list_recyclerView);
         mProductListAdapter=new ProductListAdapter(ProductListActivity.this,mProductArrayList);
 
-        populateRecyclerView();
+//        populateRecyclerView();
         mRecyclerView.setAdapter(mProductListAdapter);
         mRecyclerView.setLayoutManager(new GridLayoutManager(ProductListActivity.this,2));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,8 +118,10 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
         Log.d("start","Acticity onCreate and position variable="+position);
+
+        initObjectBox();
     }
-    public  void populateRecyclerView(){
+   /* public  void populateRecyclerView(){
         mProductArrayList.clear();
         for(int index =0;index<productImages.length;index++){
             Product product=new Product();
@@ -120,7 +133,7 @@ public class ProductListActivity extends AppCompatActivity {
             mProductArrayList.add(product);
         }
         mProductListAdapter.notifyDataSetChanged();
-    }
+    }*/
 
    /* @Override
     public void onBackPressed() {
@@ -139,6 +152,8 @@ public class ProductListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d("start","Activity onResume");
+
+        updateProucts();
     }
 
     @Override
@@ -191,4 +206,17 @@ public class ProductListActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }*/
+
+  public  void  initObjectBox(){
+      mProductBox = ObjectBox.get().boxFor(Product.class);
+  }
+
+
+  public void  updateProucts(){
+ mProductArrayList.clear();
+      mProductQuery = mProductBox.query().order(Product_.__ID_PROPERTY).build();
+      List<Product>products = mProductQuery.find();
+      mProductArrayList.addAll(products);
+      mProductListAdapter.notifyDataSetChanged();
+  }
 }

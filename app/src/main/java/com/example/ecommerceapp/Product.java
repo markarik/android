@@ -1,9 +1,24 @@
 package com.example.ecommerceapp;
 
-public class Product {
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 
+@Entity public class Product {
+    @Id Long id;
     private String category,name,price,strikedPrice,description;
     private int image;
+
+    public Product(String category, String name, String price, String description, int image) {
+        this.category = category;
+        this.name = name;
+        this.price = price;
+//        this.strikedPrice = strikedPrice;
+        this.description = description;
+        this.image = image;
+    }
+
+    public Product() {
+    }
 
     public String getDescription() {
         return description;
