@@ -6,11 +6,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,10 +55,7 @@ public class ProductActivity extends AppCompatActivity {
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-//startActivity(i);
-                startActivityForResult(i,REQUEST_CODE);
+                startCameraDialog();
             }
         });
         productName = (EditText) findViewById(R.id.product_name_edit);
@@ -276,5 +275,37 @@ public class ProductActivity extends AppCompatActivity {
         mProductBox.put(product);
 
         finish();
+    }
+
+    private void startCameraDialog(){
+        ImageView cameraImageView,galarreyImageView,closeDialogImageView;
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(R.layout.view_camera);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        View view= LayoutInflater.from(ProductActivity.this).inflate(R.layout.view_camera,null);
+        cameraImageView=alertDialog.findViewById(R.id.dialog_camera);
+        galarreyImageView=alertDialog.findViewById(R.id.dialog_gallarey);
+        closeDialogImageView=alertDialog.findViewById(R.id.dialog_close);
+        closeDialogImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        cameraImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                savePhotoToFilePathAndRetrieve();
+                showCamera();
+            }
+        });
+    }
+
+    private  void showCamera(){
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+//startActivity(i);
+        startActivityForResult(i,REQUEST_CODE);
     }
 }

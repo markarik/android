@@ -7,5 +7,6 @@
     <color name="colorBody">#E6E6FA</color>
     <color name="colorGreen">#438f40</color>
     <color name="colorAmber">#c2994c</color>
+    <color name="nav_icons_default">#2a325c</color>
 
 </resources>
