@@ -226,8 +226,29 @@ public class ProductActivity extends AppCompatActivity {
             revokeUriPermission(uri,
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updatePhotoView();
+        }else if(requestCode==GALLERY_REQUEST_CODE){
+            Uri  photopath  =data.getData();
+            photoURI=photopath;
+            try {
+                Bitmap bitmap= MediaStore.Images.Media.getBitmap(this.getContentResolver(),photopath);
+                updatePhotoView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
+        //for camera that saves to file
+        else if ((requestCode == REQUEST_CODE)) {
+            Uri uri =
+                    FileProvider.getUriForFile(ProductActivity.this,
+                            "e.anonymous.lesson02productactivity.fileprovider",
+                            mPhotoFile);
+            photoURI=uri;
+            revokeUriPermission(uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updatePhotoView();
+        }
+
+            }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -319,6 +340,7 @@ public class ProductActivity extends AppCompatActivity {
         alertDialogBuilder.setView(R.layout.view_camera);
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
         View view= LayoutInflater.from(ProductActivity.this).inflate(R.layout.view_camera,null);
         cameraImageView=alertDialog.findViewById(R.id.dialog_camera);
         galarreyImageView=alertDialog.findViewById(R.id.dialog_gallarey);
@@ -333,7 +355,15 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 savePhotoToFilePathAndRetrieve();
-                showCamera();
+                alertDialog.dismiss();
+            }
+
+        });
+        galarreyImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFromGallarey();
+                alertDialog.dismiss();
             }
         });
     }
@@ -412,5 +442,11 @@ public class ProductActivity extends AppCompatActivity {
         }
         startActivityForResult(captureImage,
                 REQUEST_CODE);
+    }
+    private void loadFromGallarey() {
+        Intent photointent=new Intent();
+        photointent.setType("image/*");
+        photointent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(photointent,"Choose a product Photo"),GALLERY_REQUEST_CODE);
     }
 }
