@@ -1,11 +1,18 @@
 package com.example.ecommerceapp;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,23 +30,36 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.object_box.ObjectBox;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.objectbox.Box;
 
 public class ProductActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 400;
     private static final int DEFAULT_POSITION =-2;
+    private  static final  int REQUEST_CAMERA_PERMISSIONS = 67;
+    private static final int GALLERY_REQUEST_CODE = 677;
+
     private EditText productName,productDescription,productPrice;
     private Button addProduct,emailbtn;
     private Spinner categorySpinner;
     private ImageView productImage;
     private Box<Product>mProductBox;
     private int mposition;
-
+    private static  final String[] CAMERA_PERMISSION = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+    private Uri photoURI;
+    private  File mPhotoFile;
 
     private void getIntentPosition(){
         mposition = getIntent().getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,DEFAULT_POSITION);
@@ -55,7 +75,12 @@ public class ProductActivity extends AppCompatActivity {
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startCameraDialog();
+                if(isPermissionGranted()){
+                    startCameraDialog();
+                }else{
+                    requestCameraPermissions();
+                }
+
             }
         });
         productName = (EditText) findViewById(R.id.product_name_edit);
@@ -185,11 +210,22 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE && data != null){
+        if(resultCode == RESULT_OK/* && requestCode == REQUEST_CODE && data != null*/){
 
-            Bitmap b =(Bitmap)data.getExtras().get("data");
+//            Bitmap b =(Bitmap)data.getExtras().get("data");
 
-            productImage.setImageBitmap(b);
+//            productImage.setImageBitmap(b);
+            return;
+        }
+        else if ((requestCode == REQUEST_CODE)) {
+            Uri uri =
+                    FileProvider.getUriForFile(ProductActivity.this,
+                            "com.example.ecommerceapp.fileprovider",
+                            mPhotoFile);
+            photoURI=uri;
+            revokeUriPermission(uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            updatePhotoView();
         }
     }
 
@@ -296,7 +332,7 @@ public class ProductActivity extends AppCompatActivity {
         cameraImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                savePhotoToFilePathAndRetrieve();
+                savePhotoToFilePathAndRetrieve();
                 showCamera();
             }
         });
@@ -307,5 +343,74 @@ public class ProductActivity extends AppCompatActivity {
 
 //startActivity(i);
         startActivityForResult(i,REQUEST_CODE);
+    }
+    private void requestCameraPermissions(){
+        if(!isPermissionGranted() && Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
+            requestPermissions(CAMERA_PERMISSION,
+                    REQUEST_CAMERA_PERMISSIONS);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA_PERMISSIONS: {
+                if (isPermissionGranted()){
+                    startCameraDialog();
+                }
+                else{
+                    return;
+                }
+            }
+            default:
+                super.onRequestPermissionsResult(requestCode,
+                        permissions, grantResults);
+        }
+    }
+    private boolean isPermissionGranted() {
+        int result=3;
+        for (int i = 0; i < CAMERA_PERMISSION.length; i++) {
+            result = ContextCompat
+                    .checkSelfPermission(ProductActivity.this,
+                            CAMERA_PERMISSION[i]);
+            if(result!= PackageManager.PERMISSION_GRANTED){
+                break;
+            }
+        }
+        return result==PackageManager.PERMISSION_GRANTED;
+    }
+    public String getPhotoFilename() {
+        return "IMG_" + new Random().nextDouble() + ".jpg";
+    }
+    public File getPhotoFile() {
+        File filesDir = getFilesDir();
+        return new File(filesDir,
+                getPhotoFilename());
+    }
+    private void updatePhotoView() {
+        if(photoURI!=null) {
+            Glide.with(this).load(photoURI).into(productImage);
+        }
+    }
+    public void savePhotoToFilePathAndRetrieve(){
+        mPhotoFile=getPhotoFile();
+        final Intent captureImage = new
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri uri =
+                FileProvider.getUriForFile(ProductActivity.this,
+                        "com.example.ecommerceapp.fileprovider",
+                        mPhotoFile);
+        captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        List<ResolveInfo> cameraActivities =
+                ProductActivity.this
+                        .getPackageManager().queryIntentActivities(captureImage,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo activity :
+                cameraActivities) {
+            ProductActivity.this.grantUriPermission(activity.activityInfo.packageName,
+                    uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        startActivityForResult(captureImage,
+                REQUEST_CODE);
     }
 }
