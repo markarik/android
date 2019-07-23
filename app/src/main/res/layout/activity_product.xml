@@ -40,6 +40,7 @@
                 android:id="@+id/product_name_edit"
                 android:layout_width="match_parent"
                 android:hint="@string/product_name"
+                android:imeOptions="actionNext"
                 android:layout_height="wrap_content" />
          </android.support.design.widget.TextInputLayout>
 
@@ -52,6 +53,7 @@
                   android:id="@+id/product_price_edit"
                   android:layout_width="match_parent"
                   android:hint="@string/product_price"
+                  android:imeOptions="actionNext"
                   android:inputType="number"
                   android:paddingTop="50dp"
                   android:layout_height="wrap_content"/>
@@ -65,7 +67,7 @@
            android:id="@+id/product_description_edit"
            android:layout_width="match_parent"
            android:hint="@string/product_description"
-
+           android:imeOptions="actionDone"
            android:paddingTop="50dp"
            android:layout_height="wrap_content" />
    </android.support.design.widget.TextInputLayout>

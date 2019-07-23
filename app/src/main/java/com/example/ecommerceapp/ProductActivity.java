@@ -42,7 +42,7 @@ import java.util.Random;
 import io.objectbox.Box;
 
 public class ProductActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 400;
+    private static final int REQUEST_CODE = 409;
     private static final int DEFAULT_POSITION =-2;
     private  static final  int REQUEST_CAMERA_PERMISSIONS = 67;
     private static final int GALLERY_REQUEST_CODE = 677;
@@ -135,15 +135,18 @@ public class ProductActivity extends AppCompatActivity {
         if(mposition !=DEFAULT_POSITION)
         {
             Product product = ProductListActivity.mProductArrayList.get(mposition);
-            productImage.setImageResource(product.getImage());
+//            productImage.setImageResource(product.getImage());
+            Glide.with(this)
+                    .load(Uri.parse(product.getImage()))
+                    .into(productImage);
             productName.setText(product.getName());
             productPrice.setText(product.getPrice());
             productDescription.setText(product.getDescription());
         }
     }
-
+    String subject = "My subject";
     public void sendEmail(Context context) {
-        String subject = "My subject";
+
         String text = "I noticed something";
         Intent i =new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc2822");
@@ -210,7 +213,7 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK/* && requestCode == REQUEST_CODE && data != null*/){
+        if(resultCode != RESULT_OK/* && requestCode == REQUEST_CODE && data != null*/){
 
 //            Bitmap b =(Bitmap)data.getExtras().get("data");
 
@@ -323,10 +326,11 @@ public class ProductActivity extends AppCompatActivity {
         String price = productPrice.getText().toString();
         String description = productDescription.getText().toString();
         String category = categorySpinner.getSelectedItem().toString();
+        String picturePath = photoURI.toString();
 
 
         ////insert into products model
-        Product product = new Product(category,name,price,description,R.drawable.beat_headphones);
+        Product product = new Product(category,name,price,description,picturePath);
 
         //add product to objectbox
         mProductBox.put(product);

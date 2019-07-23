@@ -5,10 +5,10 @@ import io.objectbox.annotation.Id;
 
 @Entity public class Product {
     @Id Long id;
-    private String category,name,price,strikedPrice,description;
-    private int image;
+    private String category,name,price,strikedPrice,description,image;
+//    private int image;
 
-    public Product(String category, String name, String price, String description, int image) {
+    public Product(String category, String name, String price, String description, String image) {
         this.category = category;
         this.name = name;
         this.price = price;
@@ -40,7 +40,7 @@ import io.objectbox.annotation.Id;
         return strikedPrice;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -60,7 +60,7 @@ import io.objectbox.annotation.Id;
         this.strikedPrice = strikedPrice;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
