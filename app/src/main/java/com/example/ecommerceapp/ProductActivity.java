@@ -94,7 +94,14 @@ public class ProductActivity extends AppCompatActivity {
        updatebtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+                updateProduct();
+           }
+       });
 
+       deletebtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               deleteProduct();
            }
        });
 
@@ -356,11 +363,16 @@ public class ProductActivity extends AppCompatActivity {
         String price = productPrice.getText().toString();
         String description = productDescription.getText().toString();
         String category = categorySpinner.getSelectedItem().toString();
-        String picturePath = photoURI.toString();
+
+        String picturePath = photoURI!=null?photoURI.toString():mProduct.getImage();
 
 
         ////insert into products model
-        mProduct = new Product(category,name,price,description,picturePath);
+        mProduct.setName(name);
+        mProduct.setPrice(price);
+        mProduct.setDescription(description);
+        mProduct.setCategory(category);
+        mProduct.setImage(picturePath);
         mProductBox.put(mProduct);
         finish();
     }
