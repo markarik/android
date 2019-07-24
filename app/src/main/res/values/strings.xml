@@ -22,5 +22,7 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="product_update">Update</string>
+    <string name="delete_product">Delete</string>
 
 </resources>

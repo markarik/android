@@ -76,16 +76,18 @@
 
 
 
-    <Button
-        android:id="@+id/add_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        style="@style/TextAppearance.MaterialComponents.Button"
-
-        android:text="ADD"
-        android:textColor="@color/colorBody" />
-   <Button
+          <Button
+              android:id="@+id/add_product"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              style="@style/TextAppearance.MaterialComponents.Button"
+              android:layout_margin="16dp"
+              android:background="@color/colorPrimaryDark"
+              android:text="@string/add_product"
+              android:visibility="gone"
+              android:textColor="@color/colorBody" />
+   <!--<Button
         android:id="@+id/btn_email"
        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
@@ -94,7 +96,39 @@
         android:layout_gravity="center"
 
         android:text="Email"
-        android:textColor="@color/colorBody" />
+        android:textColor="@color/colorBody" />-->
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+
+              <Button
+                  android:id="@+id/update_product"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  style="@style/TextAppearance.MaterialComponents.Button"
+                  android:layout_margin="16dp"
+                  android:background="@color/colorPrimaryDark"
+                  android:text="@string/product_update"
+                  android:visibility="gone"
+                  android:textColor="@color/colorBody" />
+              <Button
+                   android:id="@+id/delete_product"
+                   android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_margin="8dp"
+                  android:visibility="gone"
+                   android:layout_height="wrap_content"
+                  style="@style/TextAppearance.MaterialComponents.Button"
+                   android:layout_gravity="center"
+                  android:background="@android:color/holo_red_light"
+                   android:text="@string/delete_product"
+                  android:textColor="@color/colorBody"/>
+
+          </LinearLayout>
       </LinearLayout>
    </ScrollView>
 

@@ -48,7 +48,7 @@ public class ProductActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST_CODE = 677;
 
     private EditText productName,productDescription,productPrice;
-    private Button addProduct,emailbtn;
+    private Button addProduct,updatebtn,deletebtn;
     private Spinner categorySpinner;
     private ImageView productImage;
     private Box<Product>mProductBox;
@@ -60,6 +60,7 @@ public class ProductActivity extends AppCompatActivity {
     };
     private Uri photoURI;
     private  File mPhotoFile;
+    private Product mProduct;
 
     private void getIntentPosition(){
         mposition = getIntent().getIntExtra(ProductListAdapter.CURRENT_POSITION_VALUE,DEFAULT_POSITION);
@@ -88,17 +89,14 @@ public class ProductActivity extends AppCompatActivity {
         productPrice = (EditText)  findViewById(R.id.product_price_edit);
         categorySpinner = (Spinner) findViewById(R.id.category_spinner);
         addProduct = (Button) findViewById(R.id.add_product);
+        deletebtn = (Button) findViewById(R.id.delete_product);
+        updatebtn = (Button)findViewById(R.id.update_product);
+       updatebtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
 
-        emailbtn = (Button)findViewById(R.id.btn_email);
-
-        emailbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                sendEmail(ProductActivity.this);
-            }
-        });
+           }
+       });
 
 
         addProduct.setOnClickListener(new View.OnClickListener() {
@@ -134,15 +132,30 @@ public class ProductActivity extends AppCompatActivity {
 
         if(mposition !=DEFAULT_POSITION)
         {
-            Product product = ProductListActivity.mProductArrayList.get(mposition);
+
+            showEditViews();
+            mProduct = ProductListActivity.mProductArrayList.get(mposition);
 //            productImage.setImageResource(product.getImage());
             Glide.with(this)
-                    .load(Uri.parse(product.getImage()))
+                    .load(Uri.parse(mProduct.getImage()))
                     .into(productImage);
-            productName.setText(product.getName());
-            productPrice.setText(product.getPrice());
-            productDescription.setText(product.getDescription());
+            productName.setText(mProduct.getName());
+            productPrice.setText(mProduct.getPrice());
+            productDescription.setText(mProduct.getDescription());
         }
+        else{
+            showAddViews();
+        }
+    }
+
+
+    private void showAddViews(){
+        addProduct.setVisibility(View.VISIBLE);
+    }
+
+    private  void showEditViews(){
+        updatebtn.setVisibility(View.VISIBLE);
+        deletebtn.setVisibility(View.VISIBLE);
     }
     String subject = "My subject";
     public void sendEmail(Context context) {
@@ -330,11 +343,31 @@ public class ProductActivity extends AppCompatActivity {
 
 
         ////insert into products model
-        Product product = new Product(category,name,price,description,picturePath);
+       mProduct = new Product(category,name,price,description,picturePath);
 
         //add product to objectbox
-        mProductBox.put(product);
+        mProductBox.put(this.mProduct);
 
+        finish();
+    }
+
+    private  void updateProduct(){
+        String name = productName.getText().toString();
+        String price = productPrice.getText().toString();
+        String description = productDescription.getText().toString();
+        String category = categorySpinner.getSelectedItem().toString();
+        String picturePath = photoURI.toString();
+
+
+        ////insert into products model
+        mProduct = new Product(category,name,price,description,picturePath);
+        mProductBox.put(mProduct);
+        finish();
+    }
+
+    private  void deleteProduct (){
+
+        mProductBox.remove(mProduct);
         finish();
     }
 
