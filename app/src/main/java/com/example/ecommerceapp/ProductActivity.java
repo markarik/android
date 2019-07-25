@@ -1,7 +1,9 @@
 package com.example.ecommerceapp;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -379,8 +381,21 @@ public class ProductActivity extends AppCompatActivity {
 
     private  void deleteProduct (){
 
-        mProductBox.remove(mProduct);
-        finish();
+
+        AlertDialog.Builder build = new AlertDialog.Builder(ProductActivity.this);
+        build.setMessage("Do You Want To Delete This Product ?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mProductBox.remove(mProduct);
+                        finish();
+                    }
+                }).setNegativeButton("Cancel",null);
+
+        AlertDialog alert = build.create();
+
+        alert.show();
+
     }
 
     private void startCameraDialog(){
